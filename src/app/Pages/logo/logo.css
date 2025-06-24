@@ -1,0 +1,200 @@
+.logo-container {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+    url("/pexels-pixabay-355465.jpg") no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.top-item-box {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  animation: slideDown 0.8s ease-in-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.first-item,
+.second-item {
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.first-item {
+  width: 80px;
+}
+
+.second-item {
+  width: 180px;
+}
+
+.first-item:hover,
+.second-item:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.first-item p,
+.second-item p {
+  color: white;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.main-display {
+  height: 550px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.first-headline,
+.second-headline {
+  width: 100%;
+  max-width: 560px;
+  animation: fadeUp 1s ease-in-out forwards;
+  text-align: center;
+}
+
+.first-headline {
+  animation-delay: 0.3s;
+  margin-bottom: 10px;
+}
+
+.second-headline {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.first-headline-text,
+.second-headline-text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.first-headline-text span,
+.second-headline-text span {
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 1px 1px 8px #000;
+}
+
+.go-buttons-box {
+  position: absolute;
+  bottom: 100px;
+  height: 80px;
+  width: 430px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  animation: fadeUp 1.2s ease-in-out forwards;
+  animation-delay: 1s;
+}
+
+.buttons-collection {
+  display: flex;
+  align-items: center;
+  width: 390px;
+  justify-content: space-between;
+}
+
+.random-chat,
+.go-home {
+  height: 35px;
+  width: 120px;
+  background-color: #008cff;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.random-chat:hover,
+.go-home:hover {
+  transform: scale(1.1);
+  background-color: #0a65d2;
+}
+
+.developers-info {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  font-size: 0.95rem;
+  animation: fadeUp 1.5s ease-in-out forwards;
+  animation-delay: 1.4s;
+}
+
+.developer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.developer img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+}
+
+.developer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.developer a:hover {
+  color: #00bfff;
+}
