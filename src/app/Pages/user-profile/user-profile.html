@@ -1,0 +1,24 @@
+<div class="user-profile-page">
+  <div class="user-container">
+    <div class="user-left">
+      <img [src]="userData.profilePic" alt="Profile Picture" class="profile-pic" />
+    </div>
+
+    <div class="user-right">
+      <h2 class="user-name">{{ userData.name }}</h2>
+
+      <div class="user-meta">
+        <p>Age: {{ userData.age }}</p>
+        <p>Email: {{ userData.email || 'Not provided' }}</p>
+        <p>Location: {{ userData.location || 'Unknown' }}</p>
+        <p>Joined: {{ userData.joined || 'N/A' }}</p>
+        <p class="user-bio">{{ userData.bio }}</p>
+      </div>
+
+      <div class="button-row">
+        <button class="follow-btn">Follow</button>
+        <button class="message-btn">Message</button>
+      </div>
+    </div>
+  </div>
+</div>

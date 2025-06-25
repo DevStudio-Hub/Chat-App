@@ -1,0 +1,19 @@
+.home-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+app-users-chat {
+  width: 330px;
+  border-right: 1px solid #ccc;
+  background: #fff;
+}
+
+app-chat-section {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  background: #fff;
+}
