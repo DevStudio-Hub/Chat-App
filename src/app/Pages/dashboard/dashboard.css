@@ -1,0 +1,10 @@
+.main-display{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+}
+.route-display {
+  flex: 1;
+  overflow: auto;
+  min-width: 0;
+}

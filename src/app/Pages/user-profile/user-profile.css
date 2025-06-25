@@ -1,0 +1,87 @@
+.user-profile-page {
+  background-color: #fff;
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.user-container {
+  display: flex;
+  gap: 40px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.user-left {
+  flex-shrink: 0;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.user-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: #555;
+}
+
+.user-bio {
+  color: #333;
+  margin-top: 10px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.follow-btn,
+.message-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.follow-btn {
+  background-color: #0095f6;
+}
+
+.follow-btn:hover {
+  background-color: #0077c2;
+}
+
+.message-btn {
+  background-color: #262626;
+}
+
+.message-btn:hover {
+  background-color: #000;
+}

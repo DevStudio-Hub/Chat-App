@@ -10,6 +10,6 @@ import { Component } from '@angular/core';
 export class Logo {
   constructor(private router: Router){}
   handlePageButton(){
-    this.router.navigate(['/home'])
+    this.router.navigate(['/dashboard'])
   }
 }
