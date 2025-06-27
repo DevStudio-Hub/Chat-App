@@ -1,0 +1,28 @@
+
+<div class="register-wrapper">
+  <div>
+  <h2 class="form-heading">Registration</h2>
+  <div *ngIf="step === 1">
+  <input [(ngModel)]="formData.username" placeholder="Username" />
+  <input [(ngModel)]="formData.email" placeholder="Email" />
+  <input [(ngModel)]="formData.password" type="password" placeholder="Password" />
+  <button (click)="nextStep()">Next</button>
+</div>
+
+
+<div *ngIf="step === 2">
+  <input [(ngModel)]="formData.age" placeholder="Age" />
+   <select [(ngModel)]="formData.gender"  placeholder="Gender" >
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select>
+  <button (click)="nextStep()">Next</button>
+</div>
+
+<div *ngIf="step === 3">
+  <input [(ngModel)]="formData.otp" placeholder="Enter OTP" />
+  <button>Submit</button>
+</div>
+</div>
+</div>
