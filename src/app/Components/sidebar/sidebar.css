@@ -1,0 +1,88 @@
+.sidebar-container {
+  height: 100vh;
+  width: 70px;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  gap: 20px;
+}
+
+.sidebar-button {
+  position: relative;
+}
+
+.side-button {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: none;
+  background-color: #e0e0e0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.side-button:hover {
+  background-color: #d0d0d0;
+}
+
+.name-button {
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 4;
+}
+
+.sidebar-button:hover .name-button {
+  opacity: 1;
+}
+
+
+.home-icon {
+  background-image: url('/assets/icons/house-chimney-solid.svg');
+}
+.search-icon {
+  background-image: url('/assets/icons/magnifying-glass-solid.svg');
+}
+.about-icon {
+  background-image: url('/assets/icons/circle-info-solid.svg');
+}
+.help-icon {
+  background-image: url('/assets/icons/handshake-angle-solid.svg');
+}
+.account-icon {
+  background-image: url('/assets/icons/user-solid.svg');
+}
+.settings-icon {
+  background-image: url('/assets/icons/gear-solid.svg');
+}
+.developer {
+  background-image: url('/assets/icons/dev-brands.svg');
+}
+
+@media (max-width: 600px) {
+  .sidebar-container {
+    width: 55px;
+    padding: 5px 0;
+    gap: 15px;
+  }
+  .side-button {
+    height: 40px;
+    width: 40px;
+  }
+}

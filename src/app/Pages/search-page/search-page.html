@@ -1,0 +1,15 @@
+<div class="search-container">
+  <div class="search-box">
+    <input type="search" placeholder="Search users..." class="search-input" />
+    <button class="Search-btn">Search</button>
+  </div>
+
+  <div class="search-user-box">
+    @for (user of list; track $index) {
+    <div class="user" (click)="selectUser(user)">
+      <img [src]="user.profilePic" alt="pic" />
+      <span>{{user.name}}</span>
+    </div>
+    }
+  </div>
+</div>
