@@ -1,19 +1,18 @@
-.home-container {
+.chat-layout {
   display: flex;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+  height: 100vh;
 }
 
-app-users-chat {
-  width: 330px;
+.users-list {
+  width: 330px;       
+  min-width: 200px;
   border-right: 1px solid #ccc;
-  background: #fff;
+  height: 100vh;        
+  box-sizing: border-box;
 }
 
-app-chat-section {
+.chat-section {
   flex: 1;
-  display: flex;
-  min-width: 0;
-  background: #fff;
+  overflow: auto;
+  height: 100vh;        
 }
