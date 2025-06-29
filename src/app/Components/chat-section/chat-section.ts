@@ -1,19 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component,  ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ChatService } from '../../services/chat-service';
 
 @Component({
   selector: 'app-chat-section',
   imports: [CommonModule, FormsModule],
   templateUrl: './chat-section.html',
-  styleUrl: './chat-section.css'
+  styleUrl: './chat-section.css',
 })
-export class ChatSection  implements AfterViewInit{
-   messages = [
-    { text: 'Hello! How are you?', type: 'received' },
-    { text: "I’m good, thanks!", type: 'sent' }
-  ];
+export class ChatSection implements AfterViewInit, OnInit {
+  constructor(
+    private route: ActivatedRoute,
+    private chatService: ChatService
+  ) {}
+  UserProfileName: string = '';
+  
+  
+  userChat: any;
 
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      const userId = params.get('ChatId');
+      if (userId) {
+        this.userChat = this.chatService.checkData(userId)
+        this.UserProfileName = userId;
+      
+      }
+    });
+  }
   newMessage: string = '';
 
   @ViewChild('chatInput') chatInput!: ElementRef<HTMLInputElement>;
@@ -28,10 +50,24 @@ export class ChatSection  implements AfterViewInit{
 
   sendMessage() {
     const message = this.newMessage.trim();
-    if (message !== '') {
-      this.messages.push({ text: message, type: 'sent' });
-      this.newMessage = '';
-      this.focusInput();
+    if (!message) return;
+
+    let user = this.chatService.checkData(this.UserProfileName);
+
+    if (!user) {
+     
+      user = {
+        username: this.UserProfileName,
+        messages: [],
+      };
+      this.chatService.getUsersData().push(user);
     }
+
+    user.messages.push({ text: message, type: 'send' });
+    this.userChat = user;
+    this.newMessage = '';
+    this.focusInput();
   }
-}
+  }
+
+  

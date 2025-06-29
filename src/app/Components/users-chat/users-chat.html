@@ -1,81 +1,26 @@
 <div class="users-chat-container">
-
   <div class="Users-search-container">
     <input type="search" placeholder="Search..." class="Search-input" />
     <button class="Search-btn">Search</button>
   </div>
 
   <div class="users-list-container">
-
-    
-    <div class="user-box online">
-      <img src="arman.jpeg" alt="User Avatar" class="user-avatar" />
+    @for (user of users; track $index) {
+    <div class="user-box" [ngClass]="user.online ? 'online' : 'offline'" (click)="handleChatUser(user.name)">
+      <img [src]="user.profilePic" alt="User Avatar" class="user-avatar" />
       <span class="User-active"></span>
       <div class="user-info">
         <div class="user-name-time">
-          <span class="user-name">aramn</span>
-          <span class="last-seen">2 min ago</span>
+          <span class="user-name">{{ user.name }}</span>
+          <span class="last-seen">{{ user.lastSeen }}</span>
         </div>
-        <div class="last-message">hey </div>
+        <div class="last-message">{{ user.lastMessage }}</div>
       </div>
-      <span class="unread-count">3</span>
+      @if (user.unreadCount > 0) {
+      <span class="unread-count">{{ user.unreadCount }}</span>
+      }
     </div>
-
-    
-    <div class="user-box offline">
-      <img src="ayushi.jpeg" alt="User Avatar" class="user-avatar" />
-      <span class="User-active"></span>
-      <div class="user-info">
-        <div class="user-name-time">
-          <span class="user-name">ayushi</span>
-          <span class="last-seen">5 min ago</span>
-        </div>
-        <div class="last-message">Kya kar raha</div>
-      </div>
-      <span class="unread-count">1</span>
-    </div>
-
-   
-    <div class="user-box online">
-      <img src="ayushi.jpeg" alt="User Avatar" class="user-avatar" />
-      <span class="User-active"></span>
-      <div class="user-info">
-        <div class="user-name-time">
-          <span class="user-name">nisha</span>
-          <span class="last-seen">online</span>
-        </div>
-        <div class="last-message">khana khaya</div>
-      </div>
-      <span class="unread-count">2</span>
-    </div>
-
-   
-    <div class="user-box offline">
-      <img src="arman.jpeg" alt="User Avatar" class="user-avatar" />
-      <span class="User-active"></span>
-      <div class="user-info">
-        <div class="user-name-time">
-          <span class="user-name">devraj</span>
-          <span class="last-seen">10 min ago</span>
-        </div>
-        <div class="last-message">call karo</div>
-      </div>
-      <span class="unread-count">1</span>
-    </div>
-
-   
-    <div class="user-box online">
-      <img src="ayushi.jpeg" alt="User Avatar" class="user-avatar" />
-      <span class="User-active"></span>
-      <div class="user-info">
-        <div class="user-name-time">
-          <span class="user-name">khushi</span>
-          <span class="last-seen">online</span>
-        </div>
-        <div class="last-message">jaa rahi</div>
-      </div>
-      <span class="unread-count">4</span>
-    </div>
-
+    }
   </div>
 </div>
+

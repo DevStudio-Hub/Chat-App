@@ -1,4 +1,8 @@
 <div class="home-container">
-  <app-users-chat></app-users-chat>
-  <app-chat-section></app-chat-section>
+  <div class="chat-layout">
+    <app-users-chat class="users-list"></app-users-chat>
+    <div class="chat-section">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

@@ -2,13 +2,13 @@
   <div class="Chat-User-Header">
     <img src="arman.jpeg" alt="User Avatar" class="user-avatar" />
     <div class="user-info">
-      <span><strong>Arman</strong></span>
+      <span><strong> {{ UserProfileName }} </strong></span>
       <span>Online</span>
     </div>
   </div>
 
   <div class="chat-messages">
-    @for (msg of messages; track msg) {
+    @for (msg of userChat?.messages; track msg) {
       <div [ngClass]="msg.type" class="message">
         {{ msg.text }}
       </div>
