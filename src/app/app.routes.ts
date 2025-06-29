@@ -4,10 +4,12 @@ import { Home } from './Pages/home/home';
 import { Dashboard } from './Pages/dashboard/dashboard';
 import { SearchPage } from './Pages/search-page/search-page';
 import { UserProfile } from './Pages/user-profile/user-profile';
+import { Register } from './Pages/register/register';
 import { ChatSection } from './Components/chat-section/chat-section';
 
 export const routes: Routes = [
   { path: '', component: Logo },
+  { path: 'register', component: Register },
   {
     path: 'dashboard',
     component: Dashboard,
