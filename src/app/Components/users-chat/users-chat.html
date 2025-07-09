@@ -5,22 +5,32 @@
   </div>
 
   <div class="users-list-container">
-    @for (user of users; track $index) {
-    <div class="user-box" [ngClass]="user.online ? 'online' : 'offline'" (click)="handleChatUser(user.name)">
-      <img [src]="user.profilePic" alt="User Avatar" class="user-avatar" />
-      <span class="User-active"></span>
-      <div class="user-info">
-        <div class="user-name-time">
-          <span class="user-name">{{ user.name }}</span>
-          <span class="last-seen">{{ user.lastSeen }}</span>
-        </div>
-        <div class="last-message">{{ user.lastMessage }}</div>
+    @if (!users || users.length === 0) {
+      <div class="no-users-message">
+        <span>No users found.</span>
       </div>
-      @if (user.unreadCount > 0) {
-      <span class="unread-count">{{ user.unreadCount }}</span>
-      }
-    </div>
+    }
+    @for (user of users; track $index) {
+      <div class="user-box" (click)="handleChatUser(user.userId)">
+        <div class="avatar-wrapper">
+          <img
+            [src]="user.userProfile"
+            alt="User Avatar"
+            class="user-avatar"
+          />
+          <span class="status-dot" [ngClass]="user.unreadCount > 0 ? 'online' : 'offline'"></span>
+        </div>
+        <div class="user-info">
+          <div class="user-name-time">
+            <span class="user-name">{{ user.username }}</span>
+            <span class="last-seen">{{ user.lastSeen | date:'short' }}</span>
+          </div>
+          <div class="last-message">{{ user.lastMessage }}</div>
+        </div>
+        @if (user.unreadCount > 0) {
+          <span class="unread-count">{{ user.unreadCount }}</span>
+        }
+      </div>
     }
   </div>
 </div>
-

@@ -17,12 +17,13 @@
     <option value="female">Female</option>
     <option value="other">Other</option>
   </select>
-  <button (click)="nextStep()">Next</button>
+  <button (click)="handleRegister()">Next</button>
 </div>
 
 <div *ngIf="step === 3">
   <input [(ngModel)]="formData.otp" placeholder="Enter OTP" />
-  <button>Submit</button>
+  <button (click)="verifyOtp()">Submit</button>
 </div>
+
 </div>
 </div>

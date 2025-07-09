@@ -6,6 +6,7 @@ import { SearchPage } from './Pages/search-page/search-page';
 import { UserProfile } from './Pages/user-profile/user-profile';
 import { Register } from './Pages/register/register';
 import { ChatSection } from './Components/chat-section/chat-section';
+import { MyProfile } from './Pages/my-profile/my-profile';
 
 export const routes: Routes = [
   { path: '', component: Logo },
@@ -17,10 +18,11 @@ export const routes: Routes = [
       {
         path: 'home',
         component: Home,
-        children: [{ path: 'Chat/:ChatId', component: ChatSection }],
+        children: [{ path: 'Chat/:Id', component: ChatSection }],
       },
       { path: 'search', component: SearchPage },
       { path: 'userProfile/:userId', component: UserProfile },
+      {path: 'myProfile', component: MyProfile}
     ],
   },
 ];

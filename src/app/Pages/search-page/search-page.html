@@ -1,15 +1,20 @@
 <div class="search-container">
   <div class="search-box">
-    <input type="search" placeholder="Search users..." class="search-input" />
-    <button class="Search-btn">Search</button>
+    <input
+      type="search"
+      placeholder="Search users..."
+      class="search-input"
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+    />
   </div>
 
   <div class="search-user-box">
-    @for (user of list; track $index) {
-    <div class="user" (click)="selectUser(user)">
-      <img [src]="user.profilePic" alt="pic" />
-      <span>{{user.name}}</span>
-    </div>
+    @for (user of searchResults; track $index) {
+      <div class="user" (click)="selectUser(user)">
+        <img [src]="user.profileURL" alt="pic" />
+        <span>{{ user.username }}</span>
+      </div>
     }
   </div>
 </div>

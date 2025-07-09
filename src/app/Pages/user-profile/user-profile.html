@@ -1,23 +1,30 @@
 <div class="user-profile-page">
   <div class="user-container">
     <div class="user-left">
-      <img [src]="userData.profilePic" alt="Profile Picture" class="profile-pic" />
+      <img
+        [src]="userData.profileURL"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
     </div>
 
     <div class="user-right">
-      <h2 class="user-name">{{ userData.name }}</h2>
+      <h2 class="user-name">{{ userData.username }}</h2>
+
+      <h3 class="user-fullname">{{ userData.fullname || 'No full name' }}</h3>
 
       <div class="user-meta">
-        <p>Age: {{ userData.age }}</p>
-        <p>Email: {{ userData.email || 'Not provided' }}</p>
-        <p>Location: {{ userData.location || 'Unknown' }}</p>
-        <p>Joined: {{ userData.joined || 'N/A' }}</p>
-        <p class="user-bio">{{ userData.bio }}</p>
+        <p><strong>Age:</strong> {{ userData.Age || 'N/A' }}</p>
+        <p><strong>Gender:</strong> {{ userData.gender || 'Not specified' }}</p>
+        <p><strong>Address:</strong> {{ userData.address || 'Unknown' }}</p>
+        <p class="user-bio">{{ userData.bio || '' }}</p>
       </div>
 
       <div class="button-row">
         <button class="follow-btn">Follow</button>
-        <button class="message-btn" (click)="handleMessege(userData.name)">Message</button>
+        <button class="message-btn" (click)="handleMessege(userData._id)">
+          Message
+        </button>
       </div>
     </div>
   </div>

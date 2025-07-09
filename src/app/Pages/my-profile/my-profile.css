@@ -1,0 +1,102 @@
+.my-profile-page {
+  background-color: #f4f6f8;
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.my-profile-card {
+  display: flex;
+  gap: 30px;
+  max-width: 850px;
+  width: 100%;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.my-left {
+  flex-shrink: 0;
+}
+
+.my-profile-pic {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e0e0e0;
+}
+
+.my-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.my-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.my-meta {
+  font-size: 15px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.my-bio {
+  color: #444;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.edit-btn,
+.logout-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #6c63ff;
+}
+
+.edit-btn:hover {
+  background-color: #5a53cc;
+}
+
+.logout-btn {
+  background-color: #ff5252;
+}
+
+.logout-btn:hover {
+  background-color: #e84141;
+}
+
+.edit-input {
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}

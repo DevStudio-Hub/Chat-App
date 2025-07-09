@@ -1,0 +1,49 @@
+<div class="my-profile-page">
+  @if (loading) {
+    
+    <div class="loader-modal">
+      <div class="loader">loding... </div>
+    </div>
+  } @else if (userData) {
+   
+    @if (editMode) {
+      <form (ngSubmit)="saveProfile()" #editForm="ngForm" class="my-profile-card">
+        <div class="my-left">
+          <img [src]="userData.profileURL" class="my-profile-pic" />
+        </div>
+
+        <div class="my-right">
+          <input type="text" [(ngModel)]="userData.fullname" name="fullname" class="edit-input" required />
+          <input type="number" [(ngModel)]="userData.Age" name="Age" class="edit-input" required />
+          
+          <input type="text" [(ngModel)]="userData.address" name="address" class="edit-input" />
+          <textarea [(ngModel)]="userData.bio" name="bio" class="edit-input"></textarea>
+
+          <div class="button-row">
+            <button type="submit" class="edit-btn">Save</button>
+            <button type="button" class="logout-btn" (click)="toggleEdit()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    } @else {
+      <div class="my-profile-card">
+        <div class="my-left">
+          <img [src]="userData.profileURL" class="my-profile-pic" />
+        </div>
+
+        <div class="my-right">
+          <h2 class="my-name">{{ userData.fullname }}</h2>
+          <p>Age: {{ userData.Age }}</p>
+          <p>Email: {{ userData.email }}</p>
+          <p>Location: {{ userData.address }}</p>
+          <p class="my-bio">{{ userData.bio }}</p>
+
+          <div class="button-row">
+            <button class="edit-btn" (click)="toggleEdit()">Edit Profile</button>
+            <button class="logout-btn" (click)="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

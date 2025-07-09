@@ -12,33 +12,79 @@ import { ChatService } from '../../services/chat-service';
 
 @Component({
   selector: 'app-chat-section',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './chat-section.html',
-  styleUrl: './chat-section.css',
+  styleUrls: ['./chat-section.css'],
 })
 export class ChatSection implements AfterViewInit, OnInit {
+  UserProfileName = '';
+  userProfilePic = ""
+  userData = JSON.parse(localStorage.getItem('user') || '{}');
+  currentUserId = this.userData._id;
+  roomId = '';
+
+  messages: any = [];
+
+  newMessage = '';
+
+  @ViewChild('chatInput') chatInput!: ElementRef<HTMLInputElement>;
+
   constructor(
     private route: ActivatedRoute,
     private chatService: ChatService
   ) {}
-  UserProfileName: string = '';
-  
-  
-  userChat: any;
 
   ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      const userId = params.get('ChatId');
-      if (userId) {
-        this.userChat = this.chatService.checkData(userId)
-        this.UserProfileName = userId;
-      
-      }
-    });
-  }
-  newMessage: string = '';
+  this.route.paramMap.subscribe((params) => {
+    const userId = params.get('Id');
+    if (userId) {
+      this.chatService.getUserInfo(userId).subscribe({
+        next: (data: any) => {
+          this.UserProfileName = data.username;
+          this.userProfilePic = data.profileURL
+          this.roomId = [this.currentUserId, data._id].sort().join('_');
 
-  @ViewChild('chatInput') chatInput!: ElementRef<HTMLInputElement>;
+         
+          this.chatService.joinRoom(this.roomId);
+
+          this.chatService.clearUnReadCount(this.roomId)
+
+          
+          this.chatService.getMessages(this.roomId).subscribe((msgs: any) => {
+            this.messages = msgs.map((m: any) => ({
+              text: m.text,
+              sender:
+                String(m.sender && m.sender._id ? m.sender._id : m.sender) ===
+                String(this.currentUserId)
+                  ? 'send'
+                  : 'receive',
+              sentAt: m.sentAt,
+            }));
+          });
+
+          
+          this.chatService.onMessage((data: any) => {
+            console.log("Socket Live Message:", data);
+
+            this.messages.push({
+              text: data.text,
+              sender:
+                String(data.sender) === String(this.currentUserId)
+                  ? 'send'
+                  : 'receive',
+              sentAt: data.sentAt,
+            });
+          });
+        },
+        error: (error) => {
+          console.error('Error fetching user info:', error);
+        },
+      });
+    }
+  });
+}
+
 
   ngAfterViewInit() {
     this.focusInput();
@@ -49,25 +95,11 @@ export class ChatSection implements AfterViewInit, OnInit {
   }
 
   sendMessage() {
-    const message = this.newMessage.trim();
-    if (!message) return;
+    const text = this.newMessage.trim();
+    if (!text) return;
+    this.chatService.sendMessage(this.roomId, text, this.UserProfileName);
 
-    let user = this.chatService.checkData(this.UserProfileName);
-
-    if (!user) {
-     
-      user = {
-        username: this.UserProfileName,
-        messages: [],
-      };
-      this.chatService.getUsersData().push(user);
-    }
-
-    user.messages.push({ text: message, type: 'send' });
-    this.userChat = user;
     this.newMessage = '';
     this.focusInput();
   }
-  }
-
-  
+}
