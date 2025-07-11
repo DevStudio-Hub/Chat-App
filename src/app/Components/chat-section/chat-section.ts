@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -17,16 +18,20 @@ import { ChatService } from '../../services/chat-service';
   templateUrl: './chat-section.html',
   styleUrls: ['./chat-section.css'],
 })
-export class ChatSection implements AfterViewInit, OnInit {
+export class ChatSection implements AfterViewInit, OnInit, OnDestroy {
   UserProfileName = '';
-  userProfilePic = ""
+  userProfilePic = '';
   userData = JSON.parse(localStorage.getItem('user') || '{}');
   currentUserId = this.userData._id;
   roomId = '';
 
   messages: any = [];
 
+  private shouldScrollBottom = false;
+
   newMessage = '';
+  @ViewChild('scrollContainer')
+  private scrollContainer!: ElementRef<HTMLDivElement>;
 
   @ViewChild('chatInput') chatInput!: ElementRef<HTMLInputElement>;
 
@@ -36,58 +41,79 @@ export class ChatSection implements AfterViewInit, OnInit {
   ) {}
 
   ngOnInit() {
-  this.route.paramMap.subscribe((params) => {
-    const userId = params.get('Id');
-    if (userId) {
-      this.chatService.getUserInfo(userId).subscribe({
-        next: (data: any) => {
-          this.UserProfileName = data.username;
-          this.userProfilePic = data.profileURL
-          this.roomId = [this.currentUserId, data._id].sort().join('_');
+    this.route.paramMap.subscribe((params) => {
+      const userId = params.get('Id');
+      if (userId) {
+        this.chatService.getUserInfo(userId).subscribe({
+          next: (data: any) => {
+            this.UserProfileName = data.username;
+            this.userProfilePic = data.profileURL;
+            this.roomId = [this.currentUserId, data._id].sort().join('_');
 
-         
-          this.chatService.joinRoom(this.roomId);
+            this.chatService.joinRoom(this.roomId);
 
-          this.chatService.clearUnReadCount(this.roomId)
+            this.chatService.clearUnReadCount(this.roomId);
 
-          
-          this.chatService.getMessages(this.roomId).subscribe((msgs: any) => {
-            this.messages = msgs.map((m: any) => ({
-              text: m.text,
-              sender:
-                String(m.sender && m.sender._id ? m.sender._id : m.sender) ===
-                String(this.currentUserId)
-                  ? 'send'
-                  : 'receive',
-              sentAt: m.sentAt,
-            }));
-          });
-
-          
-          this.chatService.onMessage((data: any) => {
-            console.log("Socket Live Message:", data);
-
-            this.messages.push({
-              text: data.text,
-              sender:
-                String(data.sender) === String(this.currentUserId)
-                  ? 'send'
-                  : 'receive',
-              sentAt: data.sentAt,
+            this.chatService.getMessages(this.roomId).subscribe((msgs: any) => {
+              this.messages = msgs.map((m: any) => ({
+                text: m.text,
+                sender:
+                  String(m.sender && m.sender._id ? m.sender._id : m.sender) ===
+                  String(this.currentUserId)
+                    ? 'send'
+                    : 'receive',
+                sentAt: m.sentAt,
+              }));
+              this.shouldScrollBottom = true;
             });
-          });
-        },
-        error: (error) => {
-          console.error('Error fetching user info:', error);
-        },
-      });
+
+            this.chatService.onMessage((data: any) => {
+              this.messages.push({
+                text: data.text,
+                sender:
+                  String(data.sender) === String(this.currentUserId)
+                    ? 'send'
+                    : 'receive',
+                sentAt: data.sentAt,
+              });
+              this.shouldScrollBottom = this.isUserNearBottom();
+            });
+          },
+          error: (error) => {
+            console.error('Error fetching user info:', error);
+          },
+        });
+      }
+    });
+  }
+
+  private scrollToBottom(): void {
+    const el = this.scrollContainer?.nativeElement;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
     }
-  });
-}
+  }
 
+  private isUserNearBottom(): boolean {
+    const el = this.scrollContainer?.nativeElement;
+    if (!el) return true;
+    const threshold = 100;
+    return el.scrollTop + el.clientHeight > el.scrollHeight - threshold;
+  }
 
+  ngOnDestroy() {
+    this.chatService.removeMessageListener();
+  }
   ngAfterViewInit() {
     this.focusInput();
+    setTimeout(() => this.scrollToBottom(), 0);
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.shouldScrollBottom) {
+      this.scrollToBottom();
+      this.shouldScrollBottom = false;
+    }
   }
 
   focusInput() {

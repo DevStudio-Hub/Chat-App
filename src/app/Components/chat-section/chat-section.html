@@ -13,7 +13,7 @@
   </div>
   } @else {
 
-  <div class="chat-messages">
+  <div #scrollContainer class="chat-messages">
     @for (msg of messages; track msg) {
     <div [ngClass]="['message', msg.sender]">{{ msg.text }}</div>
     }

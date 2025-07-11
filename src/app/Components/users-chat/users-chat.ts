@@ -18,7 +18,7 @@ export class UsersChat implements OnInit {
   ngOnInit() {
     this.fetchRooms();
     this.chatService.onRoomsUpdated(() => {
-      console.log('Rooms updated - fetching again...');
+    
       this.fetchRooms();
     });
   }

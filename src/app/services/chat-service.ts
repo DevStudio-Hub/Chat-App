@@ -7,6 +7,7 @@ import { io, Socket } from 'socket.io-client';
 })
 export class ChatService {
   private socket: Socket;
+  private messageListener: ((data: any) => void) | null = null;
 
   constructor(private http: HttpClient) {
     this.socket = io('http://localhost:3000', {
@@ -29,16 +30,27 @@ export class ChatService {
   }
 
   onMessage(callback: (data: any) => void) {
-    this.socket.on('receiveMessage', callback);
+    if (this.messageListener) {
+      this.socket.off('receiveMessage', this.messageListener);
+    }
+
+    this.messageListener = callback;
+    this.socket.on('receiveMessage', this.messageListener);
+  }
+
+  removeMessageListener() {
+    if (this.messageListener) {
+      this.socket.off('receiveMessage', this.messageListener);
+      this.messageListener = null;
+    }
   }
 
   onRoomsUpdated(callback: () => void) {
     this.socket.on('roomsUpdated', callback);
   }
 
-  clearUnReadCount(roomId: string){
-    this.socket.emit("markAsRead", { roomId });
-
+  clearUnReadCount(roomId: string) {
+    this.socket.emit('markAsRead', { roomId });
   }
   getMessages(roomId: string) {
     return this.http.get(
