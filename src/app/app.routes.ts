@@ -7,10 +7,12 @@ import { UserProfile } from './Pages/user-profile/user-profile';
 import { Register } from './Pages/register/register';
 import { ChatSection } from './Components/chat-section/chat-section';
 import { MyProfile } from './Pages/my-profile/my-profile';
+import { Login } from './Pages/login/login';
 
 export const routes: Routes = [
   { path: '', component: Logo },
   { path: 'register', component: Register },
+  { path: 'login', component: Login},
   {
     path: 'dashboard',
     component: Dashboard,

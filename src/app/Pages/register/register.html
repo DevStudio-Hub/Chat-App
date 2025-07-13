@@ -1,29 +1,59 @@
+<div class="register-component">
+  <div class="register-wrapper">
+    <div>
+      <h2 class="form-heading">Registration</h2>
+      <form [formGroup]="registerForm">
+        <div *ngIf="step === 1">
+          <input formControlName="username" placeholder="Username" />
+          @if (registerForm.get("username")?.invalid &&
+          registerForm.get('username')?.touched) {
+          <div class="error-name">Username is required</div>
+          }
+          <input formControlName="email" placeholder="Email" />
+          @if (registerForm.get("email")?.invalid &&
+          registerForm.get('email')?.touched) {
+          <div class="error-name">Email is required</div>
+          }
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="Password"
+          />
+          @if (registerForm.get("password")?.invalid &&
+          registerForm.get('password')?.touched) {
+          <div class="error-name">Password is required</div>
+          }
+          <button (click)="nextStep()">Next</button>
+        </div>
 
-<div class="register-wrapper">
-  <div>
-  <h2 class="form-heading">Registration</h2>
-  <div *ngIf="step === 1">
-  <input [(ngModel)]="formData.username" placeholder="Username" />
-  <input [(ngModel)]="formData.email" placeholder="Email" />
-  <input [(ngModel)]="formData.password" type="password" placeholder="Password" />
-  <button (click)="nextStep()">Next</button>
-</div>
+        <div *ngIf="step === 2">
+          <input formControlName="age" placeholder="Age" />
+          @if (registerForm.get("age")?.invalid &&
+          registerForm.get('age')?.touched) {
+          <div class="error-name">Age is required</div>
+          }
+          <select formControlName="gender" placeholder="Gender">
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          @if (registerForm.get("gender")?.invalid &&
+          registerForm.get('gender')?.touched) {
+          <div class="error-name">Gender is required</div>
+          }
+          <button (click)="handleRegister()">Next</button>
+        </div>
 
-
-<div *ngIf="step === 2">
-  <input [(ngModel)]="formData.age" placeholder="Age" />
-   <select [(ngModel)]="formData.gender"  placeholder="Gender" >
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-    <option value="other">Other</option>
-  </select>
-  <button (click)="handleRegister()">Next</button>
-</div>
-
-<div *ngIf="step === 3">
-  <input [(ngModel)]="formData.otp" placeholder="Enter OTP" />
-  <button (click)="verifyOtp()">Submit</button>
-</div>
-
-</div>
+        <div *ngIf="step === 3">
+          <input formControlName="otp" placeholder="Enter OTP" />
+          @if (registerForm.get("otp")?.invalid &&
+          registerForm.get('otp')?.touched) {
+          <div class="error-name">OTP is required</div>
+          }
+          <button (click)="verifyOtp()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

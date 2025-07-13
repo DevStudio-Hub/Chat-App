@@ -1,0 +1,26 @@
+<div class="login-component">
+  <div class="login-box">
+    <form [formGroup]="loginForm" (submit)="loginSubmit()">
+      <div class="header-name">
+        <h2>Login Form</h2>
+      </div>
+      <label for="username">Username</label>
+      <input type="text" formControlName="username" />
+      @if (loginForm.get("username")?.invalid &&
+      loginForm.get('username')?.touched) {
+      <div class="error-name">Name is required</div>
+      }
+      <label for="password">Password</label>
+      <input type="password" formControlName="password" />
+      @if (loginForm.get("password")?.invalid &&
+      loginForm.get('password')?.touched) {
+      <div class="error-name">Password is required</div>
+      }
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+      <div class="register-link">
+        <a routerLink="/register">Account create? Register</a>
+      </div>
+    </form>
+  </div>
+</div>

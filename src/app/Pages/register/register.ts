@@ -1,43 +1,49 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ChatService } from './../../services/chat-service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { createLinkedSignal } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
+  registerForm: FormGroup;
   step = 1;
-  constructor(private chatService: ChatService, private http: HttpClient, private router:Router) {}
-
-  formData: any = {
-    username: '',
-    email: '',
-    password: '',
-    age: '',
-    gender: '',
-    DOB: '',
-    otp: '',
-  };
+  constructor(
+    private chatService: ChatService,
+    private http: HttpClient,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
+      password: ['', Validators.required, Validators.minLength(8)],
+      age: [Validators.required],
+      gender: ['', Validators.required, Validators],
+      otp: ['', Validators.required],
+    });
+  }
 
   nextStep() {
     this.step++;
   }
 
   handleRegister() {
-    const payload = {
-      username: this.formData.username,
-      email: this.formData.email,
-      password: this.formData.password,
-      gender: this.formData.gender,
-      Age: this.formData.age, // Assuming `age` is treated as DOB input (or you can use Date selector)
-    };
+    const payload = this.registerForm.value;
 
     this.chatService.registerUser(payload).subscribe({
       next: (res: any) => {
@@ -59,8 +65,8 @@ export class Register {
 
   verifyOtp() {
     const otpPayload = {
-      username: this.formData.username,
-      otp: this.formData.otp,
+      username: this.registerForm.get('email')?.value,
+      otp: this.registerForm.get('otp')?.value,
     };
 
     this.http
@@ -71,7 +77,7 @@ export class Register {
         next: (res: any) => {
           if (res.success) {
             alert('OTP Verified Successfully');
-            this.router.navigate(["/dashboard/home"])
+            this.router.navigate(['/dashboard/home']);
           } else {
             alert(res.message || 'OTP verification failed.');
           }
