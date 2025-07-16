@@ -18,32 +18,42 @@ export class UsersChat implements OnInit {
   ngOnInit() {
     this.fetchRooms();
     this.chatService.onRoomsUpdated(() => {
-    
       this.fetchRooms();
     });
   }
   fetchRooms() {
-    this.chatService.getRooms().subscribe((rooms: any) => {
-      this.users = rooms.map((room: any) => {
-        const other = room.participants.find(
-          (p: any) => p.user !== this.currentUserId
-        );
-        return {
-          roomId: room.roomId,
-          userId: other.user,
-          username: other.username,
-          userProfile: other.userProfile,
-          lastMessage: room.lastMessage?.text || '',
-          lastSeen: room.updatedAt,
-          unreadCount: other.unreadCount,
-        };
-      });
-      console.log('Users List:', this.users);
+    this.chatService.getRooms().subscribe({
+      next: (rooms: any) => {
+        this.users = rooms.map((room: any) => {
+          const other = room.participants.find(
+            (p: any) => p.user !== this.currentUserId
+          );
+          return {
+            roomId: room.roomId,
+            userId: other.user,
+            username: other.username,
+            userProfile: other.userProfile,
+            lastMessage: room.lastMessage?.text || '',
+            lastSeen: room.updatedAt,
+            unreadCount: other.unreadCount,
+          };
+        });
+        
+      },
+
+      error: (err) => {
+        console.error('Register error', err);
+        if (err.error) {
+          console.log(err.error);
+        } else {
+          alert('Server error during registration.');
+        }
+      },
     });
   }
 
   handleChatUser(username: string) {
-    console.log(username)
+    
     this.router.navigate(['/dashboard/home/Chat', username]);
   }
 }

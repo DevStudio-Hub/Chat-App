@@ -52,8 +52,6 @@ export class ChatSection implements AfterViewInit, OnInit, OnDestroy {
 
             this.chatService.joinRoom(this.roomId);
 
-            this.chatService.clearUnReadCount(this.roomId);
-
             this.chatService.getMessages(this.roomId).subscribe((msgs: any) => {
               this.messages = msgs.map((m: any) => ({
                 text: m.text,
@@ -64,10 +62,14 @@ export class ChatSection implements AfterViewInit, OnInit, OnDestroy {
                     : 'receive',
                 sentAt: m.sentAt,
               }));
+              this.chatService.clearUnReadCount(this.roomId);
               this.shouldScrollBottom = true;
             });
 
             this.chatService.onMessage((data: any) => {
+              if (data.roomId !== this.roomId) {
+                return;
+              }
               this.messages.push({
                 text: data.text,
                 sender:
@@ -77,6 +79,8 @@ export class ChatSection implements AfterViewInit, OnInit, OnDestroy {
                 sentAt: data.sentAt,
               });
               this.shouldScrollBottom = this.isUserNearBottom();
+              this.chatService.clearUnReadCount(this.roomId);
+              this.shouldScrollBottom = true;
             });
           },
           error: (error) => {

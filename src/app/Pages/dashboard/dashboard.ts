@@ -4,17 +4,17 @@ import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Sidebar,RouterOutlet,],
+  imports: [Sidebar, RouterOutlet],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css'
+  styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
-constructor(private router: Router){}
-ngOnInit() {
-    const user = localStorage.getItem("user")
-    if(!user){
-      this.router.navigate((["/login"]))
+  constructor(private router: Router) {}
+  ngOnInit() {
+    const userString = localStorage.getItem('isLogin');
+    const isLogin = userString ? JSON.parse(userString) : false;
+    if (!isLogin) {
+      this.router.navigate(['/login']);
     }
-}
-
+  }
 }

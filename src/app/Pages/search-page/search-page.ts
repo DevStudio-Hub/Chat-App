@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from '../../services/chat-service';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -22,8 +21,9 @@ export class SearchPage {
       return;
     }
     this.chatService.searchUser(this.searchQuery).subscribe({
-      next: (results) => {
-        this.searchResults = results;
+      next: (results: any) => {
+        this.searchResults = results.users;
+
       },
       error: (error) => {
         console.error('Search error:', error);
@@ -32,7 +32,7 @@ export class SearchPage {
   }
 
   selectUser(user: any) {
-    console.log(user)
+    
     this.router.navigate(['/dashboard/userProfile', user._id]);
   }
 }

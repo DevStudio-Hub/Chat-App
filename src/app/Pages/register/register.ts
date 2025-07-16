@@ -29,12 +29,12 @@ export class Register {
     private fb: FormBuilder
   ) {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required, Validators.minLength(8)],
-      age: [Validators.required],
-      gender: ['', Validators.required, Validators],
-      otp: ['', Validators.required],
+      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      Age: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      otp: ['', [Validators.required]],
     });
   }
 
@@ -47,44 +47,45 @@ export class Register {
 
     this.chatService.registerUser(payload).subscribe({
       next: (res: any) => {
-        if (res.success) {
-          console.log('Registration successful. OTP sent.');
-          console.log('res data', res.data);
-          localStorage.setItem('user', JSON.stringify(res.data));
-          this.step = 3;
-        } else {
-          alert(res.mess || 'Registration failed.');
-        }
+        console.log('Registration successful. OTP sent.', res);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('isLogin', JSON.stringify(res.isLogin));
+
+        this.step = 3;
       },
       error: (err) => {
-        console.error(err);
-        alert('Server error during registration.');
+        console.error('Register error', err);
+        if (err.error) {
+          console.log(err.error);
+        } else {
+          alert('Server error during registration.');
+        }
       },
     });
   }
 
   verifyOtp() {
     const otpPayload = {
-      username: this.registerForm.get('email')?.value,
+      username: this.registerForm.get('username')?.value,
       otp: this.registerForm.get('otp')?.value,
     };
 
     this.http
-      .post('http://localhost:3000/api/auth/otpverifyde', otpPayload, {
+      .post('http://localhost:3000/auth/otpVerify', otpPayload, {
         withCredentials: true,
       })
       .subscribe({
         next: (res: any) => {
-          if (res.success) {
-            alert('OTP Verified Successfully');
-            this.router.navigate(['/dashboard/home']);
-          } else {
-            alert(res.message || 'OTP verification failed.');
-          }
+          alert('OTP Verified Successfully');
+          this.router.navigate(['/dashboard/home']);
         },
         error: (err) => {
-          console.error(err);
-          alert('Error verifying OTP');
+          console.error('Register error', err);
+          if (err.error) {
+            console.log(err.error);
+          } else {
+            alert('Server error during registration.');
+          }
         },
       });
   }

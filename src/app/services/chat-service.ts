@@ -12,6 +12,7 @@ export class ChatService {
   constructor(private http: HttpClient) {
     this.socket = io('http://localhost:3000', {
       withCredentials: true,
+      transports: ['websocket'],
     });
   }
   userData = JSON.parse(localStorage.getItem('user') || '{}');
@@ -54,7 +55,7 @@ export class ChatService {
   }
   getMessages(roomId: string) {
     return this.http.get(
-      `http://localhost:3000/api/search/get-messages?roomId=${roomId}`,
+      `http://localhost:3000/getMessagesAndRooms/GetMessage?roomId=${roomId}`,
       {
         withCredentials: true,
       }
@@ -62,33 +63,38 @@ export class ChatService {
   }
 
   getRooms() {
-    return this.http.get(`http://localhost:3000/api/search/get-rooms`, {
+    return this.http.get(`http://localhost:3000/getMessagesAndRooms/GetRooms`, {
       withCredentials: true,
     });
   }
 
   registerUser = (user: any) => {
-    return this.http.post('http://localhost:3000/api/auth/register', user, {
+    return this.http.post('http://localhost:3000/auth/Register', user, {
+      withCredentials: true,
+    });
+  };
+  loginUser = (user: any) => {
+    return this.http.post('http://localhost:3000/auth/Login', user, {
       withCredentials: true,
     });
   };
   updateBio = (user: any) => {
-    return this.http.post('http://localhost:3000/api/auth/updatebio', user, {
+    return this.http.post('http://localhost:3000/auth/Update-Bio', user, {
       withCredentials: true,
     });
   };
   searchUser = (query: string) => {
     return this.http.get(
-      `http://localhost:3000/api/search/search-user?query=${query}`,
+      `http://localhost:3000/search/Users?Users=${query}`,
       {
         withCredentials: true,
       }
     );
   };
 
-  getUserInfo = (username: string) => {
+  getUserInfo = (userId: string) => {
     return this.http.get(
-      `http://localhost:3000/api/search/user-profile?query=${username}`,
+      `http://localhost:3000/search/UserInfo?userId=${userId}`,
       { withCredentials: true }
     );
   };

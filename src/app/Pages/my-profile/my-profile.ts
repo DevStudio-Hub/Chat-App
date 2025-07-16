@@ -20,7 +20,6 @@ export class MyProfile implements OnInit {
     if (userDtail) {
       this.userData = JSON.parse(userDtail);
       this.loading = false;
-      console.log(this.userData);
     }
   }
 
@@ -29,7 +28,6 @@ export class MyProfile implements OnInit {
   }
 
   saveProfile(): void {
-    console.log('Profile saved:', this.userData);
     const oldUser = JSON.parse(localStorage.getItem('user') || '{}');
     const apiData = {
       fullname: this.userData.fullname,
@@ -39,11 +37,7 @@ export class MyProfile implements OnInit {
     };
     this.chatservice.updateBio(apiData).subscribe({
       next: (res: any) => {
-        if (res.success) {
-          console.log('Bio updated successfully:', res.data);
-        } else {
-          console.error('Failed to update bio:', res.message);
-        }
+        console.log('Bio updated successfully:', res.data);
       },
       error: (err) => {
         console.log('Error updating bio:', err);

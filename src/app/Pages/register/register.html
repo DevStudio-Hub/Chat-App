@@ -17,7 +17,7 @@
           <input
             formControlName="password"
             type="password"
-            placeholder="Password"
+            placeholder="password"
           />
           @if (registerForm.get("password")?.invalid &&
           registerForm.get('password')?.touched) {
@@ -27,9 +27,9 @@
         </div>
 
         <div *ngIf="step === 2">
-          <input formControlName="age" placeholder="Age" />
-          @if (registerForm.get("age")?.invalid &&
-          registerForm.get('age')?.touched) {
+          <input formControlName="Age" type="number" placeholder="Age" />
+          @if (registerForm.get("Age")?.invalid &&
+          registerForm.get('Age')?.touched) {
           <div class="error-name">Age is required</div>
           }
           <select formControlName="gender" placeholder="Gender">
