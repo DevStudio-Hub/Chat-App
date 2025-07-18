@@ -1,0 +1,33 @@
+<div class="chat-box">
+  @for (msg of messages; track msg) {
+    <div
+      [ngClass]="{
+        you: msg.from === 'you',
+        stranger: msg.from === 'stranger',
+        system: msg.from === 'system'
+      }"
+    >
+      <strong *ngIf="msg.from !== 'system'">
+        {{ msg.from === 'you' ? 'You' : 'Stranger' }}:
+      </strong>
+      {{ msg.text }}
+    </div>
+  }
+</div>
+
+<div class="input-container">
+  <button (click)="leaveChat()" class="leave-button">
+    {{ chatEnded ? 'New Chat' : confirmLeave ? 'Confirm Leave' : 'Leave' }}
+  </button>
+
+  <input
+    [(ngModel)]="inputText"
+    [disabled]="!matched || disconnected"
+    (keydown.enter)="sendMessage()"
+    placeholder="Type your message..."
+  />
+
+  <button (click)="sendMessage()" [disabled]="!matched || disconnected">
+    Send
+  </button>
+</div>

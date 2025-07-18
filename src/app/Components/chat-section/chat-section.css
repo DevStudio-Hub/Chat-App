@@ -89,6 +89,7 @@
 }
 
 .no-messages {
+  flex: 1;
   text-align: center;
   color: #888;
   font-size: 1.1rem;

@@ -1,7 +1,9 @@
+import { Logo } from './../logo/logo';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { ChatService } from '../../services/chat-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
@@ -10,7 +12,7 @@ import { ChatService } from '../../services/chat-service';
   styleUrl: './my-profile.css',
 })
 export class MyProfile implements OnInit {
-  constructor(private chatservice: ChatService) {}
+  constructor(private chatservice: ChatService, private router: Router) {}
   userData: any = null;
   loading: boolean = true;
   editMode: boolean = false;
@@ -59,6 +61,18 @@ export class MyProfile implements OnInit {
   }
 
   logout(): void {
-    console.log('Logout clicked');
+    this.chatservice.logOutUser().subscribe({
+      next: (data: any) => {
+        if (data.isLogOut) {
+          localStorage.clear()
+          this.router.navigate(['/login'])
+
+        }
+        
+      },
+      error: (err) => {
+        console.log(err.error)
+      }
+    });
   }
 }

@@ -12,4 +12,7 @@ export class Logo {
   handlePageButton(){
     this.router.navigate(['/dashboard/home'])
   }
+  handleRandoChatButton() {
+    this.router.navigate(['/random-Chat'])
+  }
 }

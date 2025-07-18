@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 
 @Injectable({
@@ -8,6 +9,7 @@ import { io, Socket } from 'socket.io-client';
 export class ChatService {
   private socket: Socket;
   private messageListener: ((data: any) => void) | null = null;
+  static socket: Socket;
 
   constructor(private http: HttpClient) {
     this.socket = io('http://localhost:3000', {
@@ -15,6 +17,7 @@ export class ChatService {
       transports: ['websocket'],
     });
   }
+
   userData = JSON.parse(localStorage.getItem('user') || '{}');
   currentUserId = this.userData._id;
 
@@ -78,18 +81,24 @@ export class ChatService {
       withCredentials: true,
     });
   };
+  logOutUser = () => {
+    return this.http.post(
+      'http://localhost:3000/auth/LogOut',
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  };
   updateBio = (user: any) => {
     return this.http.post('http://localhost:3000/auth/Update-Bio', user, {
       withCredentials: true,
     });
   };
   searchUser = (query: string) => {
-    return this.http.get(
-      `http://localhost:3000/search/Users?Users=${query}`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.get(`http://localhost:3000/search/Users?Users=${query}`, {
+      withCredentials: true,
+    });
   };
 
   getUserInfo = (userId: string) => {

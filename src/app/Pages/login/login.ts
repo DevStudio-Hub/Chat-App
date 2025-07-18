@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ChatService } from '../../services/chat-service';
 
 @Component({
@@ -21,7 +21,8 @@ export class Login {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private service: ChatService
+    private service: ChatService,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -33,13 +34,10 @@ export class Login {
     const payload = this.loginForm.value;
     this.service.loginUser(payload).subscribe({
       next: (res: any) => {
-        if (res.success) {
-          
-          console.log('res data', res.data);
-          localStorage.setItem('user', JSON.stringify(res.data));
-        } else {
-          alert(res.mess || 'Registration failed.');
-        }
+        console.log('Login successful. OTP sent.', res);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('isLogin', JSON.stringify(res.isLogin));
+        this.router.navigate(['/dashboard/home']);
       },
       error: (err) => {
         console.error(err);

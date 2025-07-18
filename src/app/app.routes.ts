@@ -8,6 +8,7 @@ import { Register } from './Pages/register/register';
 import { ChatSection } from './Components/chat-section/chat-section';
 import { MyProfile } from './Pages/my-profile/my-profile';
 import { Login } from './Pages/login/login';
+import {  RandomChatComponent } from './Pages/random-chat/random-chat';
 
 export const routes: Routes = [
   { path: '', component: Logo },
@@ -27,4 +28,5 @@ export const routes: Routes = [
       {path: 'myProfile', component: MyProfile}
     ],
   },
+  {path: "random-Chat", component: RandomChatComponent}
 ];
